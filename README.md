@@ -1,6 +1,5 @@
 #Docekr Compose:
-teamcity server
-teamcity agent
+#teamcity server AND teamcity agent.
 
 #Run with:
 docker-compose up -d
