@@ -1,0 +1,42 @@
+version: '2'
+services:
+ tc-server:
+  tty: true
+  image: sjoerdmulder/teamcity:latest
+  container_name: teamcity-server
+  environment:
+  - TEAMCITY_DATA_PATH=/var/lib/teamcity
+  volumes:
+  - /home/noamg/teamcity_data:/var/lib/teamcity
+  ports:
+  - "80:8111"
+  links:
+  - postgres
+ postgres:
+  image: postgres
+  container_name: teamcity-postgres
+  volumes:
+  - /var/lib/postgresql/data:/var/lib/postgresql/data
+  environment:
+  - POSTGRES_PASSWORD=teamcity
+  ports:
+  - "5432:5432"
+ tc-agent:
+  image: sjoerdmulder/teamcity-agent:latest
+  tty: true
+  container_name: teamcity-agent
+  volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /usr/bin/docker:/bin/docker
+  - /usr/lib/x86_64-linux-gnu/libapparmor.so.1:/lib/x86_64-linux-gnu/libapparmor.so.1
+  environment:
+  - TEAMCITY_SERVER=http://tc-server:8111
+  ports:
+  - "9090:9090"
+  depends_on:
+  - tc-server
+  - postgres
+  links:
+  - tc-server
+  restart: "always"
+
