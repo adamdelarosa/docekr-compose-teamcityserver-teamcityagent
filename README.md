@@ -1,4 +1,4 @@
-# docekr Compose:
+#Docekr Compose:
 teamcity server
 teamcity agent
 
@@ -7,3 +7,4 @@ docker-compose up -d
 
 #And watch it running: 
 docker ps -a
+
