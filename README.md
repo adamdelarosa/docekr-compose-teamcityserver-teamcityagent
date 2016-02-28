@@ -5,4 +5,5 @@ teamcity agent
 #Run with:
 docker-compose up -d
 
-And watch it running: docker ps -a
+#And watch it running: 
+docker ps -a
